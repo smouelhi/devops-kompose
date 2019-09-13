@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: bitbucket
+  namespace: atlassian
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/tls-acme: "true"
+    certmanager.k8s.io/cluster-issuer: "letsencrypt-production"
+spec:
+  rules:
+  - host: bitbucket.k8s.eradahcapital.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: bitbucket-service
+          servicePort: 7990
+  tls:
+  - secretName: bitbucket-production-tls
+    hosts:
+    - bitbucket.k8s.eradahcapital.com

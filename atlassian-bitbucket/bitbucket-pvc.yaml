@@ -1,0 +1,32 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: bitbucket-pv
+  namespace: atlassian
+  labels:
+    type: local
+    app: bitbucket
+spec:
+  storageClassName: default
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/kube-data/bitbucket"
+    type: DirectoryOrCreate
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: bitbucket-pvc
+  namespace: atlassian
+  labels:
+    app: bitbucket
+spec:
+  storageClassName: default
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi

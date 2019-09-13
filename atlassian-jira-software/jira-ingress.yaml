@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: atlassian-jira-software
+  namespace: atlassian
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/tls-acme: "true"
+    certmanager.k8s.io/cluster-issuer: "letsencrypt-production"
+spec:
+  rules:
+  - host: jira.k8s.eradahcapital.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: atlassian-jira-atlassian-jira-software
+          servicePort: 8080
+  tls:
+  - secretName: jira-production-tls
+    hosts:
+    - jira.k8s.eradahcapital.com
