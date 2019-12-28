@@ -30,4 +30,3 @@ Make sure the job has been successfully done.
 ```sh
 kubectl -n atlassian logs -f job/create-databases
 ```
-
