@@ -2,14 +2,14 @@
 
 image:
   repository: atlassian/confluence-server
-  tag: 6.9.0
+  tag: 7.1.2
   pullPolicy: IfNotPresent
 
 confluence:
-  reverseProxyHost: confluence.example.com
+  reverseProxyHost: confluence.eradahcapital.com
   reverseProxyPort: 443
   reverseProxyScheme: https
-  javaHeapSize: 1024m
+  javaHeapSize: 2048m
   javaMemoryOptions: "-XX:MaxMetaspaceSize=512m -XX:MaxDirectMemorySize=10m"
   javaOptions: ""
 
@@ -19,7 +19,7 @@ synchrony:
 
 service:
   type: ClusterIP
-  port: 80
+  port: 8090
 
 ingress:
   enabled: false
@@ -28,7 +28,7 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   path: /
   hosts:
-    - confluence.example.com
+    - confluence.eradahcapital.com
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -37,7 +37,8 @@ ingress:
 persistence:
   enabled: true
   accessMode: ReadWriteOnce
-  size: 8Gi
+  size: 100Gi
+  storageClassName: managed-premium
   # existingClaim: existing-pvc
 
 resources: {}

@@ -1,14 +1,14 @@
 releases:
-  - name: atlassian-jira
+  - name: atlassian-jira-software
     namespace: atlassian
     chart: ./atlassian-jira-software
     values:
       - ingress:
-          enabled: false
-          # hosts:
-          #   - jira.{{ requiredEnv "DEVOPS_DOMAIN" }}
+          enabled: true
+          hosts:
+            - jira.{{ requiredEnv "DEVOPS_DOMAIN" }}
         jira:
-          javaHeapSize: 1536m
+          javaHeapSize: 2048m
           reverseProxyHost: jira.{{ requiredEnv "DEVOPS_DOMAIN" }}
           # Disable websudo for SAML or OIDC
           javaOptions: "-Djira.websudo.is.disabled=true"
@@ -26,9 +26,9 @@ releases:
     chart: ./atlassian-confluence
     values:
       - ingress:
-          enabled: false
-          # hosts:
-          #   - confluence.{{ requiredEnv "DEVOPS_DOMAIN" }}
+          enabled: true
+          hosts:
+            - confluence.{{ requiredEnv "DEVOPS_DOMAIN" }}
         confluence:
           reverseProxyHost: confluence.{{ requiredEnv "DEVOPS_DOMAIN" }}
         resources:
@@ -39,17 +39,3 @@ releases:
           requests:
             cpu: 0
             memory: 2048Mi
-
-  - name: jira-to-slack
-    namespace: atlassian
-    chart: ./jira-to-slack
-    values:
-      - ingress:
-          enabled: false
-          # hosts:
-          #   - jira-to-slack.{{ requiredEnv "DEVOPS_DOMAIN" }}
-        resources:
-          limits:
-            memory: 32Mi
-          requests:
-            memory: 32Mi

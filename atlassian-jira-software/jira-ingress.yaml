@@ -9,7 +9,7 @@ metadata:
     certmanager.k8s.io/cluster-issuer: "letsencrypt-production"
 spec:
   rules:
-  - host: jira.k8s.eradahcapital.com
+  - host: jira.eradahcapital.com
     http:
       paths:
       - path: /
@@ -19,4 +19,4 @@ spec:
   tls:
   - secretName: jira-production-tls
     hosts:
-    - jira.k8s.eradahcapital.com
+    - jira.eradahcapital.com

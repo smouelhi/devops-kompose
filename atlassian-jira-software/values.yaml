@@ -2,11 +2,11 @@
 
 image:
   repository: atlassian/jira-software
-  tag: 8.3.3
+  tag: 8.6
   pullPolicy: IfNotPresent
 
 jira:
-  reverseProxyHost: jira.example.com
+  reverseProxyHost: jira.eradahcapital.com
   reverseProxyPort: 443
   reverseProxyScheme: https
   javaHeapSize: 2048m
@@ -18,23 +18,25 @@ service:
   port: 8080
 
 ingress:
-  enabled: false
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/tls-acme: "true"
+    certmanager.k8s.io/cluster-issuer: "letsencrypt-production"
   path: /
   hosts:
-    - jira.example.com
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+    - jira.eradahcapital.com
+  tls:
+  - secretName: jira-production-tls
+    hosts:
+    - jira.eradahcapital.com
 
 persistence:
   enabled: true
   accessMode: ReadWriteOnce
-  size: 8Gi
-  # existingClaim: existing-pvc
+  size: 100Gi
+  storageClassName: managed-premium
+  #existingClaim: jira-pvc
 
 resources: {}
 
